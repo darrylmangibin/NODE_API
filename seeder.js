@@ -10,8 +10,13 @@ dotenv.config({ path: "./config/config.env" });
 const Bootcamp = require("./models/Bootcamp");
 const Course = require("./models/Course");
 
+const db =
+	(process.env.NODE_ENV === "production" && process.env.MONGO_URI) ||
+	(process.env.NODE_ENV === "development" && process.env.LOCAL_URI) ||
+	null;
+
 // connect to DB
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(db, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useFindAndModify: false,

@@ -9,7 +9,11 @@ const connectDB = require("./config/db");
 dotenv.config({ path: "./config/config.env" });
 
 // Connect to database
-connectDB();
+const db =
+	(process.env.NODE_ENV === "production" && process.env.MONGO_URI) ||
+	(process.env.NODE_ENV === "development" && process.env.LOCAL_URI) ||
+	null;
+connectDB(db);
 
 // Route files
 const bootcamps = require("./routes/bootcamps");
